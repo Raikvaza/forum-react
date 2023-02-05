@@ -91,17 +91,17 @@ const Login = () => {
         setPassword(e.target.password.value);
 // Check for Mail and password validity
         (async() => {
-            await fetch(`http://localhost:8080/api/checkPassword`, {
-                method: "POST",
+            await fetch(`http://localhost:8080/api/checkPassword`, 
+            {
                 headers: {
-                    'Content-type': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-type': 'text/plain'
                 },
+                method: "POST",
                 body: JSON.stringify({
                     Username: mail,
                     Password: password
                 })
-                
-                
             }).then((r) => r.json())
             .then((data) => {
                console.log(data); 
