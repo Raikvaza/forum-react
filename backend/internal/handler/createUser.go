@@ -3,10 +3,11 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
-	"forum-backend/internal/database/execute"
-	"forum-backend/internal/models"
 	"io"
 	"net/http"
+
+	"forum-backend/internal/database/execute"
+	"forum-backend/internal/models"
 )
 
 func (s *apiServer) CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -30,6 +31,7 @@ func (s *apiServer) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 		return
 	}
+	fmt.Println(usr)
 	if res, booll := execute.CreateUserSql(usr, s.DB); !booll {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(res))

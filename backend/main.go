@@ -1,8 +1,9 @@
 package main
 
 import (
-	"forum-backend/internal/app"
 	"log"
+
+	"forum-backend/internal/app"
 )
 
 func main() {
