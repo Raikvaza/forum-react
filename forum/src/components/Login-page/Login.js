@@ -81,7 +81,9 @@ const Login = () => {
                 console.log(r);
                 if (r.ok){
                     navigate("/home", {
-                        name: username
+                        state: {
+                            username
+                        }
                     });
                 }
             })

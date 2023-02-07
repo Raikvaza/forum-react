@@ -1,8 +1,15 @@
 import React from 'react';
 import Header from '../components/Header/Header';
 import Body from '../components/Body/Body';
-const HomePage = (props) => {
+
+import { useLocation } from "react-router-dom";
+
+
+const HomePage = () => {
 // const {username} = props;
+const location = useLocation();
+const { state } = location;
+const username = state.username;
 
 
     return (
@@ -10,7 +17,7 @@ const HomePage = (props) => {
         <Header />
         <Body />
         <div>
-        <h2> Hello {props.username}</h2>
+        <h2> Hello {username}</h2>
 
         </div>
         </div>
