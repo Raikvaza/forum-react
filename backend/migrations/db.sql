@@ -2,9 +2,15 @@ CREATE TABLE IF NOT EXISTS user(
 		userId  INTEGER PRIMARY KEY AUTOINCREMENT,
 		username TEXT UNIQUE,
 		password text, 	
-		email text,
-		token TEXT ,
-		expiresAt DATETIME
+		email text
+		-- token TEXT ,
+		-- expiresAt DATETIME
+);
+CREATE TABLE IF NOT EXISTS user_sessions(
+  token TEXT,
+  expiresAt TEXT,
+  userId INTEGER,
+  FOREIGN KEY (userId) REFERENCES user(userId)
 );
 CREATE TABLE IF NOT EXISTS posts(
 		postId INTEGER PRIMARY KEY AUTOINCREMENT,

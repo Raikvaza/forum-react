@@ -12,12 +12,10 @@ type CheckUser struct {
 }
 
 type User struct {
-	UserId    int    `json:"UserId"`
-	Username  string `json:"Username"`
-	Password  string `json:"Password"`
-	Email     string `json:"Email"`
-	Token     string `json:"Token"`
-	ExpiresAt string `json:"ExpiresAt"`
+	UserId   int    `json:"UserId"`
+	Username string `json:"Username"`
+	Password string `json:"Password"`
+	Email    string `json:"Email"`
 }
 
 type NewPost struct {

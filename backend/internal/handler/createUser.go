@@ -28,7 +28,6 @@ func (s *apiServer) CreateUser(w http.ResponseWriter, r *http.Request) {
 		fmt.Print(err.Error())
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("Bad Request"))
-
 		return
 	}
 	fmt.Println(usr)

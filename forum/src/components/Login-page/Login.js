@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import './Login.css'
 
 const Login = () => {
-    useEffect(()=> {
-        
+    useEffect(()=> {   
             const inputText = document.querySelectorAll('.auth-form__input');
             
             inputText.forEach( function(input) {
@@ -43,7 +43,7 @@ const Login = () => {
                 });
             });
     },[]);
-
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -77,7 +77,15 @@ const Login = () => {
                     Username: username,
                     password: password
                 })
-            }).then((r) => console.log(r))
+            }).then((r) => {
+                console.log(r);
+                if (r.ok){
+                    navigate("/home", {
+                        name: username
+                    });
+                }
+            })
+            throw new Error('Server response was not ok')
         })();
     }
     

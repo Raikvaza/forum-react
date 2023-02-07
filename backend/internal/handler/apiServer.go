@@ -31,11 +31,12 @@ func CorsHeaders(next http.Handler) http.Handler {
 }
 
 func (s *apiServer) Start() error {
+	log.Println("Starting the server at port localhost:8080")
+
 	s.Router.Handle("/api/checkPassword", CorsHeaders(http.HandlerFunc(s.CheckPassword)))
 	s.Router.Handle("/api/createUser", CorsHeaders(http.HandlerFunc(s.CreateUser)))
 	s.Router.HandleFunc("/api/createPost", s.CreatePost)
 	s.Router.HandleFunc("/api/createComment", s.NewComment)
 	s.Router.HandleFunc("/api/newLike", s.Like)
-	log.Println("Starting the server at port localhost:8080")
 	return http.ListenAndServe(":8080", s.Router)
 }

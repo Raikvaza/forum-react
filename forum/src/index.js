@@ -1,41 +1,61 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './routes/App';
-import SignUpPage from './routes/Signup';
+// import React from 'react';
+// import ReactDOM from 'react-dom/client';
+// import './index.css';
 
-import { BrowserRouter as Router, Routes, Route, useLoaderData } from "react-router-dom";
-import {
-  createBrowserRouter,
-  RouterProvider,
+// import LoginPage from './routes/LoginPage';
+// import SignUpPage from './routes/Signup';
+// import HomePage from './routes/HomePage'
+
+// import { BrowserRouter as Router, Routes, Route, useLoaderData } from "react-router-dom";
+// import {
+//   createBrowserRouter,
+//   RouterProvider,
   
-} from "react-router-dom";
+// } from "react-router-dom";
 
 
 
 
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App/>,
-  },
-  {
-    path:"/signup",
-    element: <SignUpPage/>,
-    
-    // loader: ({params}) => {
-    //   return params.para;
-    // },
-  },
-]);
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <LoginPage/>,
+//   },
+//   {
+//     path:"/signup",
+//     element: <SignUpPage/>,
+//   },
+//   {
+//     path:"/home",
+//     element: <HomePage />
+//   }
+// ]);
 
+import React from 'react';
+import { BrowserRouter, Route, Routes} from "react-router-dom";
+import ReactDOM from 'react-dom/client';
+
+import LoginPage from './routes/LoginPage';
+import SignUpPage from './routes/Signup';
+import HomePage from './routes/HomePage';
+
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route exact path="/" element={<LoginPage/>} />
+      <Route path="/signup" element={<SignUpPage/>} />
+      <Route path="/home" element={<HomePage/>} />
+    </Routes>
+  </BrowserRouter>
+);
+
+export default App;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <App />
+    {/* <RouterProvider router={router} /> */}
   </React.StrictMode>
 );
-
-

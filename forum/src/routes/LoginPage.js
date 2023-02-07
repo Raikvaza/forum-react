@@ -1,8 +1,8 @@
-import './App.css';
+import './LoginPage.css';
 import Login from '../components/Login-page/Login'
 
 
-function App() {
+function LoginPage() {
   return (
     <div className="App">
       <Login />
@@ -10,4 +10,4 @@ function App() {
   );
 }
 
-export default App;
+export default LoginPage;
