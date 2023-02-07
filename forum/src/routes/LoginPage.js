@@ -1,5 +1,5 @@
-import './LoginPage.css';
-import Login from '../components/Login-page/Login'
+import './Route-Styles/LoginPage.css';
+import Login from '../components/Login/Login'
 
 
 function LoginPage() {

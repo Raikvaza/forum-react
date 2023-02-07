@@ -70,15 +70,33 @@ const Login = () => {
             {
                 headers: {
                     'Accept': 'text/plain',
-                    'Content-type': 'text/plain'
+                    'Content-type': 'text/plain',
+                    'Credentials': 'include'
                 },
                 method: "POST",
+                credentials: 'include',
                 body: JSON.stringify({
                     Username: username,
                     password: password
-                })
+                }),
             }).then((r) => {
-                console.log(r);
+                console.log(r.headers.get("set-cookie"));
+                const cookies = r.headers.get('set-cookie');
+                if (cookies) {
+                  const cookieArray = cookies.split(';');
+                  for (const cookie of cookieArray) {
+                    const cookieNameValue = cookie.split('=');
+                    const cookieName = cookieNameValue[0].trim();
+                    if (cookieName === 'token') {
+                      const tokenValue = cookieNameValue[1].trim();
+                      // store the token value in document.cookie
+                      console.log(tokenValue);
+                      document.cookie = `token=${tokenValue};SameSite=None;Secure;path=/;`;
+                      break;
+                    }
+                  }
+                }
+                
                 if (r.ok){
                     navigate("/home", {
                         state: {
@@ -87,7 +105,7 @@ const Login = () => {
                     });
                 }
             })
-            throw new Error('Server response was not ok')
+            //throw new Error('Server response was not ok')
         })();
     }
     

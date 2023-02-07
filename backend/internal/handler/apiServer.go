@@ -21,9 +21,12 @@ func NewApiServer(db *sql.DB) *apiServer {
 
 func CorsHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// if r.Method == "OPTIONS" {
+		// 	w.WriteHeader(http.StatusOK)
+		// }
 		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, charset")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Cookie, Content-Length, Accept-Encoding, X-CSRF-Token, charset, Credentials, Accept")
 		w.Header().Set("Access-Control-Allow-Credentials", "true")
 		fmt.Println("Cors applied")
 		next.ServeHTTP(w, r)
@@ -35,7 +38,7 @@ func (s *apiServer) Start() error {
 
 	s.Router.Handle("/api/checkPassword", CorsHeaders(http.HandlerFunc(s.CheckPassword)))
 	s.Router.Handle("/api/createUser", CorsHeaders(http.HandlerFunc(s.CreateUser)))
-	s.Router.HandleFunc("/api/createPost", s.CreatePost)
+	s.Router.Handle("/api/createPost", CorsHeaders(http.HandlerFunc(s.CreatePost)))
 	s.Router.HandleFunc("/api/createComment", s.NewComment)
 	s.Router.HandleFunc("/api/newLike", s.Like)
 	return http.ListenAndServe(":8080", s.Router)

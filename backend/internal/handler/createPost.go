@@ -6,11 +6,17 @@ import (
 	"forum-backend/internal/database/execute"
 	"forum-backend/internal/models"
 	"io"
+	"log"
 	"net/http"
 )
 
 func (s *apiServer) CreatePost(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodOptions {
+		w.WriteHeader(200)
+		return
+	}
 	if r.Method != http.MethodPost {
+		fmt.Println("Wrong Method", r.Method)
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
@@ -19,10 +25,24 @@ func (s *apiServer) CreatePost(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(400)
 		return
 	}
+	log.Println("got past cors preflight")
+
+	tokenClient, err := r.Cookie("token")
+	log.Println(tokenClient.Value)
+	if err != nil {
+		log.Println(err.Error)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if booll := execute.CheckByToken(s.DB, tokenClient.Value); !booll {
+		log.Print(err.Error())
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 	var post models.NewPost
 	err = json.Unmarshal(body, &post)
 	if err != nil {
-		fmt.Print(err.Error())
+		log.Print(err.Error())
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
