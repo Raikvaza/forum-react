@@ -44,7 +44,7 @@ async function handleSubmit(event, text, name) {
         headers: {
           'Content-Type': 'application/json',
         //   'Accept': 'text/plain',
-          'Cookie': `${token}`,
+          // 'Cookie': `${token}`,
         },
         body: JSON.stringify({ 
           Content: text,
