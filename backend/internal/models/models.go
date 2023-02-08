@@ -25,7 +25,8 @@ type NewPost struct {
 }
 
 type NewComment struct {
-	Body string `json:"body"`
+	Author string `json:"author"`
+	Body   string `json:"body"`
 }
 
 type Like struct {

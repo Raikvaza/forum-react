@@ -4,22 +4,24 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"forum-backend/internal/database/execute"
-	"forum-backend/internal/models"
 	"io"
 	"log"
 	"net/http"
 	"time"
 
+	"forum-backend/internal/database/execute"
+	"forum-backend/internal/models"
+
 	"github.com/google/uuid"
 )
 
 func (s *apiServer) CheckPassword(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost && r.Method != http.MethodOptions {
+	if r.Method != http.MethodPost {
 		fmt.Println("Wrong Method", r.Method)
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
+
 	body, err := io.ReadAll(r.Body)
 	if err != nil || len(body) == 0 {
 		log.Println("Empty body")
@@ -27,6 +29,7 @@ func (s *apiServer) CheckPassword(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+
 	var usr models.CheckUser
 	err = json.Unmarshal(body, &usr)
 	if err != nil {
@@ -58,6 +61,7 @@ func (s *apiServer) CheckPassword(w http.ResponseWriter, r *http.Request) {
 			}
 			expiresAt := time.Now().Add(time.Hour * 24).Format("2006-01-02 15:04:05")
 			token := generateToken()
+
 			_, err = tokenStat.Exec(token, expiresAt, userModel.UserId)
 			if err != nil {
 				log.Println(err)
@@ -66,7 +70,8 @@ func (s *apiServer) CheckPassword(w http.ResponseWriter, r *http.Request) {
 			cookie := &http.Cookie{
 				Name:     "token",
 				Value:    token,
-				HttpOnly: true,
+				HttpOnly: false,
+				Path:     "/",
 			}
 			http.SetCookie(w, cookie)
 		}
@@ -85,11 +90,13 @@ func (s *apiServer) CheckPassword(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("User not found")
 	return
 }
+
 func generateToken() string {
 	token := uuid.New().String()
 	fmt.Println("Generated token:", token)
 	return token
 }
+
 func sessionNotExists(db *sql.DB, userID int) (bool, error) {
 	// check if the token already exists in the sessions table
 	selectRecord := "SELECT token FROM user_sessions WHERE userId = ?"

@@ -17,7 +17,16 @@ import './Input.css'
 //     return "";
 //   }
   
-async function handleSubmit(event, text) {
+var getCookie = function(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length === 2) {
+    return parts.pop().split(";").shift();
+  }
+}
+
+
+async function handleSubmit(event, text, name) {
     event.preventDefault();
     // const cookie = document.cookie.split(';').find(c => c.trim().startsWith('token='));
 
@@ -26,17 +35,22 @@ async function handleSubmit(event, text) {
     //   return;
     // }
     // const token = cookie.split('=')[1];
-    const token = document.cookie
+    const token = getCookie("token")
     console.log(token);
     try {
       const response = await fetch('http://localhost:8080/api/createPost', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         //   'Accept': 'text/plain',
           'Cookie': `${token}`,
         },
-        body: JSON.stringify({ text: text }),
+        body: JSON.stringify({ 
+          Content: text,
+          Title: "asd",
+          Author: name,
+        }),
       });
       const data = await response.json();
       console.log(data);
@@ -46,11 +60,10 @@ async function handleSubmit(event, text) {
   };
 
 
-  function InputForm() {
+  function InputForm(props) {
     const [text, setText] = useState('');
-  
     return (
-      <form className='input-form' onSubmit={(e) => handleSubmit(e, text)}>
+      <form className='input-form' onSubmit={(e) => handleSubmit(e, text, props.name)}>
         <textarea value={text} onChange={(e) => setText(e.target.value)} />
         <button type="submit">Submit</button>
       </form>

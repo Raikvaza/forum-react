@@ -2,7 +2,6 @@ package handler
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"net/http"
 )
@@ -21,14 +20,15 @@ func NewApiServer(db *sql.DB) *apiServer {
 
 func CorsHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// if r.Method == "OPTIONS" {
-		// 	w.WriteHeader(http.StatusOK)
-		// }
 		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 		w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Cookie, Content-Length, Accept-Encoding, X-CSRF-Token, charset, Credentials, Accept")
 		w.Header().Set("Access-Control-Allow-Credentials", "true")
-		fmt.Println("Cors applied")
+
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(200)
+			return
+		}
 		next.ServeHTTP(w, r)
 	})
 }

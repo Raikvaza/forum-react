@@ -1,12 +1,12 @@
 import React from "react";
 import InputForm from "../Input-Form/Input-Form";
 import './Body.css'
-const Body = () => {
+const Body = (props) => {
   
   
 return (
     <div className="body-container">
-    <InputForm/>
+    <InputForm name= {props.name}/>
     </div>
   )
 

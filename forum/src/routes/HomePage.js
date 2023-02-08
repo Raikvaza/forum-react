@@ -15,7 +15,7 @@ const username = state.username;
     return (
         <div>
         <Header />
-        <Body />
+        <Body name={username}/>
         <div>
         <h2> Hello {username}</h2>
 
