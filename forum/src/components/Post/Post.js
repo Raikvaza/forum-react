@@ -7,13 +7,13 @@ import './Post.css'
     return (
       <div className='post-container'>
         <div className='post-header'>
-        <p>Time</p>
-        <p>Title</p>
-        <p>Author</p>
+        <p>{props.date}</p>
+        <p>{props.title}</p>
+        <p>{props.author}</p>
         </div>
         
         <div className='post-body'>
-            <p>Some Text</p>
+            <p>{props.content}</p>
         </div>
 
       </div>

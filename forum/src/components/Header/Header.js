@@ -13,7 +13,7 @@ const handleMouseMovement = (e) => {
   return (
     <header className="header-container">
       <div className="nav">
-        <Link to="/home">
+        <Link to="/">
           <button className="button" onMouseMove={handleMouseMovement}>Home</button>
         </Link>
         <Link to="/posts">

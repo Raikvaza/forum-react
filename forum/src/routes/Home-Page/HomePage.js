@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '../../components/Header/Header';
 import Body from '../../components/Body/Body';
 import './HomePage.css'
 import { json } from 'react-router-dom';
 
 const HomePage = () => {
-
+const [posts, setPosts] = useState([{}]);
 useEffect (() => {
     // (async() => {
     //     await fetch(`http://localhost:8080/api/checkUserByToken`, 
@@ -35,6 +35,7 @@ useEffect (() => {
     //         console.log(r);
     //     })
     // })()
+
     const fetchData = async () => {
         await fetch(`http://localhost:8080/api/checkUserByToken`, {
           headers: {
@@ -57,18 +58,20 @@ useEffect (() => {
           },
           method: "GET",
           credentials: 'include',
-        });
+        }) .then(response => response.json())
+        .then(data => {setPosts(data)})
+        .catch(error => console.error(error));
       };
       fetchData();
+      
 },[]);
 
     return (
         <div>
         <Header />
-        <Body />
+        <Body posts={posts}/>
         <div>
         {/* <h2> Hello {username}</h2> */}
-
         </div>
         </div>
     );

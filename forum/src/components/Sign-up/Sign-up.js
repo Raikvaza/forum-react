@@ -129,7 +129,7 @@ const SignUp = () => {
                 
                 <div className="auth-form__bottom">
                     <span>Already have an account? </span>
-                    <Link to = "/">
+                    <Link to = "/signin">
                     Sign in
                     </Link>
                 </div>

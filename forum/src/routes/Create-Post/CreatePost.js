@@ -11,7 +11,7 @@ const CreatePost = () => {
 // const { state } = location;
 // const username = state.username;
 
-
+console.log("asdasd");
     return (
         <div>
         <Header />

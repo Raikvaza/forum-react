@@ -87,20 +87,23 @@ const Login = () => {
                     Username: username,
                     password: password
                 }),
-            }).then((r) => {
-                console.log(r);
-                if (r.ok){
-                    navigate("/", {
-                        state: {
-                            username: username
-                        }
-                    });
-                } else {
-                    setStatus("Server-error")
+            }).then((r) =>{
+                if (!r.ok){
+                    return (setStatus("Server-erro"))      
                 }
-                
+                return (r.json())
             })
-            //throw new Error('Server response was not ok')
+            .then((data) => {
+                const responseJSON = data;
+                const {Username} = responseJSON;
+                sessionStorage.setItem("Username", Username);
+                navigate("/", {
+                    state: {
+                        username: username
+                    }
+                });
+            
+            })
         })();
     }
     
