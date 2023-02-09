@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
 import './Login.css'
-
 const Login = () => {
+    
     useEffect(()=> {   
             const inputText = document.querySelectorAll('.auth-form__input');
             
@@ -90,9 +90,9 @@ const Login = () => {
             }).then((r) => {
                 console.log(r);
                 if (r.ok){
-                    navigate("/home", {
+                    navigate("/", {
                         state: {
-                            username
+                            username: username
                         }
                     });
                 } else {

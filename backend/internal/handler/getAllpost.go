@@ -2,24 +2,16 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
-	"io"
 	"log"
 	"net/http"
 
 	"forum-backend/internal/database/execute"
-	"forum-backend/internal/models"
 )
 
-func (s *apiServer) CreatePost(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		fmt.Println("Wrong Method", r.Method)
+func (s *apiServer) GetAllpost(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		w.Write([]byte("Allowed method is GET"))
 		w.WriteHeader(http.StatusMethodNotAllowed)
-		return
-	}
-	body, err := io.ReadAll(r.Body)
-	if err != nil || len(body) == 0 {
-		w.WriteHeader(400)
 		return
 	}
 	tokenClient, err := r.Cookie("token")
@@ -34,19 +26,19 @@ func (s *apiServer) CreatePost(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Bad Request"))
 		return
 	}
-	var post models.NewPost
-	err = json.Unmarshal(body, &post)
-	fmt.Println(post)
+	allPost, err := execute.GetAllpostSql(s.DB)
 	if err != nil {
-		log.Print(err.Error())
 		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Bad Request"))
 		return
 	}
-	if res, booll := execute.CreatePostSql(post, s.DB); !booll {
+	err = json.NewEncoder(w).Encode(allPost)
+	log.Println(allPost)
+	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte(res))
+		w.Write([]byte("Bad Request"))
 		return
 	}
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 	return
 }

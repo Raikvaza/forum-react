@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS user(
 		-- expiresAt DATETIME
 );
 CREATE TABLE IF NOT EXISTS user_sessions(
-  token TEXT,
+  token TEXT PRIMARY KEY,
   expiresAt TEXT,
   userId INTEGER,
   FOREIGN KEY (userId) REFERENCES user(userId)
