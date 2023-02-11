@@ -1,23 +1,28 @@
-package handler
+package handlers
 
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
-
 	"forum-backend/internal/database/execute"
 	"forum-backend/internal/models"
+	"io"
+	"net/http"
+	"runtime"
 )
 
-func (s *apiServer) CreateUser(w http.ResponseWriter, r *http.Request) {
+func (s *apiServer) SignupHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		w.Write([]byte("Method Not Allowed"))
 		return
 	}
 	body, err := io.ReadAll(r.Body)
-	if err != nil || len(body) == 0 {
+	if err != nil {
+		_, fileName, lineNum, _ := runtime.Caller(0)
+		errStr := fmt.Sprintf("%s, %s(%s)", err.Error(), fileName, lineNum)
+		s.log.Output(errStr)
+	}
+	if len(body) == 0 {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("Bad Request"))
 		return
@@ -25,7 +30,9 @@ func (s *apiServer) CreateUser(w http.ResponseWriter, r *http.Request) {
 	var usr models.NewUser
 	err = json.Unmarshal(body, &usr)
 	if err != nil {
-		fmt.Print(err.Error())
+		_, fileName, lineNum, _ := runtime.Caller(0)
+		errStr := fmt.Sprintf("%s, %s(%s)", err.Error(), fileName, lineNum)
+		s.log.Output(errStr)
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("Bad Request"))
 		return

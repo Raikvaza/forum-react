@@ -1,14 +1,14 @@
-package handler
+package handlers
 
 import (
 	"encoding/json"
-	"io"
-	"log"
-	"net/http"
-	"strconv"
-
+	"fmt"
 	"forum-backend/internal/database/execute"
 	"forum-backend/internal/models"
+	"io"
+	"net/http"
+	"runtime"
+	"strconv"
 )
 
 func (s *apiServer) NewComment(w http.ResponseWriter, r *http.Request) {
@@ -18,17 +18,24 @@ func (s *apiServer) NewComment(w http.ResponseWriter, r *http.Request) {
 	}
 	postID, err := strconv.Atoi(r.URL.Query().Get("post_id"))
 	if err != nil {
+		_, fileName, lineNum, _ := runtime.Caller(0)
+		errStr := fmt.Sprintf("%s, %s(%s)", err.Error(), fileName, lineNum)
+		s.log.Output(errStr)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	tokenClient, err := r.Cookie("token")
 	if err != nil {
-		log.Println(err.Error)
+		_, fileName, lineNum, _ := runtime.Caller(0)
+		errStr := fmt.Sprintf("%s, %s(%s)", err.Error(), fileName, lineNum)
+		s.log.Output(errStr)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	if booll := execute.CheckByToken(s.DB, tokenClient.Value); !booll {
-		log.Print(err.Error())
+		_, fileName, lineNum, _ := runtime.Caller(0)
+		errStr := fmt.Sprintf("%s, %s(%s)", err.Error(), fileName, lineNum)
+		s.log.Output(errStr)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -39,7 +46,15 @@ func (s *apiServer) NewComment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	body, err := io.ReadAll(r.Body)
-	if err != nil || len(body) == 0 {
+	if err != nil {
+		_, fileName, lineNum, _ := runtime.Caller(0)
+		errStr := fmt.Sprintf("%s, %s(%s)", err.Error(), fileName, lineNum)
+		s.log.Output(errStr)
+		w.Write([]byte("Bad Request|400"))
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	if len(body) == 0 {
 		w.Write([]byte("Bad Request|400"))
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -47,6 +62,9 @@ func (s *apiServer) NewComment(w http.ResponseWriter, r *http.Request) {
 	var comment models.NewComment
 	err = json.Unmarshal(body, &comment)
 	if err != nil {
+		_, fileName, lineNum, _ := runtime.Caller(0)
+		errStr := fmt.Sprintf("%s, %s(%s)", err.Error(), fileName, lineNum)
+		s.log.Output(errStr)
 		w.Write([]byte("Bad Request | 400"))
 		w.WriteHeader(http.StatusBadRequest)
 		return

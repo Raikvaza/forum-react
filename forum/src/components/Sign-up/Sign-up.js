@@ -72,7 +72,7 @@ const SignUp = () => {
         
 // Check for Mail and password validity
         // (async() => {
-            await fetch(`http://localhost:8080/api/createUser`, 
+            await fetch(`http://localhost:8080/api/signup`, 
             {
                 headers: {
                     'Accept': 'text/plain',

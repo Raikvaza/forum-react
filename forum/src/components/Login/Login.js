@@ -74,7 +74,7 @@ const Login = () => {
         // console.log(password);
 // Check for Mail and password validity
         (async() => {
-            await fetch(`http://localhost:8080/api/checkPassword`, 
+            await fetch(`http://localhost:8080/api/signin`, 
             {
                 headers: {
                     'Accept': 'text/plain',
@@ -89,7 +89,7 @@ const Login = () => {
                 }),
             }).then((r) =>{
                 if (!r.ok){
-                    return (setStatus("Server-erro"))      
+                    navigate("/")
                 }
                 return (r.json())
             })
@@ -97,11 +97,13 @@ const Login = () => {
                 const responseJSON = data;
                 const {Username} = responseJSON;
                 sessionStorage.setItem("Username", Username);
-                navigate("/", {
-                    state: {
-                        username: username
-                    }
-                });
+                navigate("/", 
+                // {
+                //     state: {
+                //         username: username
+                //     }
+                // }
+                );
             
             })
         })();

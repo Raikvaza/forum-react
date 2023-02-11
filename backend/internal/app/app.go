@@ -2,7 +2,8 @@ package app
 
 import (
 	"forum-backend/internal/database"
-	"forum-backend/internal/handler"
+	"forum-backend/internal/handlers"
+	"forum-backend/internal/loger"
 	"log"
 )
 
@@ -18,7 +19,8 @@ func Run() error {
 		return err
 	}
 	log.Println("Table have been crated")
-	apiServer := handler.NewApiServer(db)
+	logError := loger.NewLogger()
+	apiServer := handlers.NewApiServer(db, logError)
 
 	return apiServer.Start()
 }

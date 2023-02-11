@@ -13,30 +13,15 @@ const Body = (props) => {
 //   }
 //   return (<p>asd</p>)
 // }
-const [username, setUsername] = useState('');
-
-useEffect(()=>{
-  const temp = sessionStorage.getItem("Username")
-  setUsername(temp);
-  console.log(username);
-},[]);
 
 return (
     <div className="body-container">
       <div className="body-posts-container">
-      { props.createPost? <InputForm name= {username}/>:<div></div>} 
-      {/* {handlePosts} */}
-      
-      {props.posts.map(({PostId, Title, Content, CreationDate, Author})=>{
-       return (<Post key={PostId} title={Title} content={Content} date={CreationDate} author={Author}/>) 
-      })}
-      
+      {props.createPost && <InputForm username= {props.username}/>}    
+      {!props.createPost && props.posts && (props.posts.map(({PostId, Title, Content, CreationDate, Author})=>{return (<Post key={PostId} title={Title} content={Content} date={CreationDate} author={Author}/>)}))}
       </div>
-    {/* <InputForm name= {props.name}/> */}
     </div>
   )
-
-
 };
 
 export default Body;
