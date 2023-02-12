@@ -1,1 +1,0 @@
-http: named cookie not present, /home/student/Documents/Code/forum/backend/internal/handlers/checkUser.go(%!s(int=20))

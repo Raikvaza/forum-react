@@ -46,49 +46,54 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 
+	"forum-backend/internal/Log"
 	"forum-backend/internal/database/execute"
 	"forum-backend/internal/models"
 )
 
 func (s *apiServer) CreatePost(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		fmt.Println("Wrong Method", r.Method)
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
 	body, err := io.ReadAll(r.Body)
 	if err != nil || len(body) == 0 {
+		// _, file, line, ok := runtime.Caller(1)
+		// if !ok {
+		// 	log.Println("failed to get the runtime caller for the Logger")
+		// }
+		Log.LogError("Couldn't read the body of a request in SignInHandler or body is empty")
+
 		w.WriteHeader(400)
 		return
 	}
 	tokenClient, err := r.Cookie("token")
-	log.Println(tokenClient)
 	if err != nil {
-		log.Println(err.Error)
+
+		Log.LogError(err.Error())
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	if booll := execute.CheckByToken(s.DB, tokenClient.Value); !booll {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("Bad Request"))
 		return
 	}
 	var post models.NewPost
 	err = json.Unmarshal(body, &post)
-	fmt.Println(post)
 	if err != nil {
-		log.Print(err.Error())
+
+		Log.LogError(err.Error())
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	if res, booll := execute.CreatePostSql(post, s.DB); !booll {
+	if booll := execute.CreatePostSql(post, s.DB); !booll {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte(res))
 		return
 	}
+	postLog := fmt.Sprintf("New Post Created by: %s", tokenClient.Value)
+
+	Log.LogInfo(postLog)
 	w.WriteHeader(http.StatusCreated)
-	return
 }

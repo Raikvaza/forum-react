@@ -3,7 +3,6 @@ package execute
 import (
 	"database/sql"
 	"forum-backend/internal/models"
-	"log"
 )
 
 func GetByToken(db *sql.DB, clientToken string) (models.User, bool, error) {
@@ -12,7 +11,6 @@ func GetByToken(db *sql.DB, clientToken string) (models.User, bool, error) {
 	query := `SELECT userId FROM user_sessions WHERE token=$1`
 	err := db.QueryRow(query, clientToken).Scan(&id)
 	if err == sql.ErrNoRows {
-		log.Println(err.Error())
 		return User, false, err
 	}
 	if err != nil {

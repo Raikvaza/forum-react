@@ -2,11 +2,10 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
+	"forum-backend/internal/Log"
 	"forum-backend/internal/models"
 	"io"
 	"net/http"
-	"runtime"
 )
 
 func (s *apiServer) Like(w http.ResponseWriter, r *http.Request) {
@@ -16,9 +15,7 @@ func (s *apiServer) Like(w http.ResponseWriter, r *http.Request) {
 	}
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
-		_, fileName, lineNum, _ := runtime.Caller(0)
-		errStr := fmt.Sprintf("%s, %s(%s)", err.Error(), fileName, lineNum)
-		s.log.Output(errStr)
+		Log.LogError(err.Error())
 		w.WriteHeader(400)
 		return
 	}
@@ -30,9 +27,7 @@ func (s *apiServer) Like(w http.ResponseWriter, r *http.Request) {
 	var newLike models.Like
 	err = json.Unmarshal(body, &newLike)
 	if err != nil {
-		_, fileName, lineNum, _ := runtime.Caller(0)
-		errStr := fmt.Sprintf("%s, %s(%s)", err.Error(), fileName, lineNum)
-		s.log.Output(errStr)
+		Log.LogError(err.Error())
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -44,5 +39,4 @@ func (s *apiServer) Like(w http.ResponseWriter, r *http.Request) {
 	// TODO INSTERT THIST TO DB usr
 	///////////////////////////
 	w.WriteHeader(http.StatusOK)
-	return
 }

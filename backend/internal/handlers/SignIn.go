@@ -5,11 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
-	"runtime"
 	"time"
 
+	"forum-backend/internal/Log"
 	"forum-backend/internal/database/execute"
 	"forum-backend/internal/models"
 
@@ -21,32 +20,37 @@ func (s *apiServer) SignInHandler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPost:
 		body, err := io.ReadAll(r.Body)
 		if err != nil || len(body) == 0 {
-			log.Println("Empty body")
+
+			Log.LogError("Couldn't read the body of a request in SignInHandler or body is empty")
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
 		var usr models.CheckUser
 		err = json.Unmarshal(body, &usr)
 		if err != nil {
-			log.Println(err)
+
+			Log.LogError(err.Error())
+
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
-		if userModel, booll, _ := execute.CheckPasswordSql(usr, s.DB); booll {
+		if userModel, booll := execute.CheckPasswordSql(usr, s.DB); booll {
 			sessionNotExists, sessionErr := sessionNotExists(s.DB, userModel.UserId)
 			if sessionErr != nil {
-				log.Println(sessionErr)
+
+				Log.LogError(sessionErr.Error())
 				w.WriteHeader(http.StatusBadRequest)
 				return
 			}
-			log.Println("session: ", sessionNotExists)
+
 			if sessionNotExists {
+
+				Log.LogInfo("Creating a new session...")
 				tokenStat, err := s.DB.Prepare(`INSERT INTO user_sessions (token, expiresAt, userId) VALUES (?, ?, ?);`)
-				// (SELECT userId FROM user WHERE username = ?)
 				if err != nil {
-					_, fileName, lineNum, _ := runtime.Caller(0)
-					errStr := fmt.Sprintf("%s, %s(%s)", err.Error(), fileName, lineNum)
-					s.log.Output(errStr)
+
+					Log.LogError(err.Error())
+
 					return
 				}
 				expiresAt := time.Now().Add(time.Hour * 24).Format("2006-01-02 15:04:05")
@@ -54,7 +58,9 @@ func (s *apiServer) SignInHandler(w http.ResponseWriter, r *http.Request) {
 
 				_, err = tokenStat.Exec(token, expiresAt, userModel.UserId)
 				if err != nil {
-					log.Println(err)
+
+					Log.LogError(err.Error())
+
 					return
 				}
 				cookie := &http.Cookie{
@@ -65,32 +71,31 @@ func (s *apiServer) SignInHandler(w http.ResponseWriter, r *http.Request) {
 					Path:     "/",
 				}
 				http.SetCookie(w, cookie)
+				loginLog := fmt.Sprintf("User with token: %s, just logged in...", token)
+
+				Log.LogInfo(loginLog)
 			}
-			// w.Header().Set("Content-Type", "application/json")
 			err := json.NewEncoder(w).Encode(userModel)
 			if err != nil {
-				log.Println(err)
+
+				Log.LogError(err.Error())
+
 				w.WriteHeader(http.StatusBadRequest)
 			}
-			// w.Write(jData)
 			w.WriteHeader(http.StatusOK)
 			return
 		}
 	default:
 		w.WriteHeader(http.StatusMethodNotAllowed)
-
 		return
 	}
 }
 
-// 	w.WriteHeader(http.StatusBadRequest)
-// 	fmt.Println("User not found")
-// 	return
-// }
-
 func generateToken() string {
 	token := uuid.New().String()
-	fmt.Println("Generated token:", token)
+	tokenStr := fmt.Sprintf("Token created: %s", token)
+
+	Log.LogInfo(tokenStr)
 	return token
 }
 
@@ -101,7 +106,9 @@ func sessionNotExists(db *sql.DB, userID int) (bool, error) {
 	err := db.QueryRow(selectRecord, userID).Scan(&token)
 	if err == sql.ErrNoRows {
 		// Handle case where no token exists for provided userId
-		log.Println("Not in sessions")
+
+		Log.LogInfo("Session doesn't exist")
+
 		return true, nil
 	} else if err != nil {
 		// Handle other errors

@@ -9,7 +9,6 @@ import (
 func (s *apiServer) HomeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)
-		w.Write([]byte("Allowed method is GET"))
 		return
 	}
 
