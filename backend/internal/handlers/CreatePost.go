@@ -60,12 +60,7 @@ func (s *apiServer) CreatePost(w http.ResponseWriter, r *http.Request) {
 	}
 	body, err := io.ReadAll(r.Body)
 	if err != nil || len(body) == 0 {
-		// _, file, line, ok := runtime.Caller(1)
-		// if !ok {
-		// 	log.Println("failed to get the runtime caller for the Logger")
-		// }
 		Log.LogError("Couldn't read the body of a request in SignInHandler or body is empty")
-
 		w.WriteHeader(400)
 		return
 	}

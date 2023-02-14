@@ -20,7 +20,6 @@ func (s *apiServer) SignInHandler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPost:
 		body, err := io.ReadAll(r.Body)
 		if err != nil || len(body) == 0 {
-
 			Log.LogError("Couldn't read the body of a request in SignInHandler or body is empty")
 			w.WriteHeader(http.StatusBadRequest)
 			return
@@ -28,39 +27,30 @@ func (s *apiServer) SignInHandler(w http.ResponseWriter, r *http.Request) {
 		var usr models.CheckUser
 		err = json.Unmarshal(body, &usr)
 		if err != nil {
-
 			Log.LogError(err.Error())
-
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
 		if userModel, booll := execute.CheckPasswordSql(usr, s.DB); booll {
 			sessionNotExists, sessionErr := sessionNotExists(s.DB, userModel.UserId)
 			if sessionErr != nil {
-
 				Log.LogError(sessionErr.Error())
 				w.WriteHeader(http.StatusBadRequest)
 				return
 			}
 
 			if sessionNotExists {
-
 				Log.LogInfo("Creating a new session...")
 				tokenStat, err := s.DB.Prepare(`INSERT INTO user_sessions (token, expiresAt, userId) VALUES (?, ?, ?);`)
 				if err != nil {
-
 					Log.LogError(err.Error())
-
 					return
 				}
 				expiresAt := time.Now().Add(time.Hour * 24).Format("2006-01-02 15:04:05")
 				token := generateToken()
-
 				_, err = tokenStat.Exec(token, expiresAt, userModel.UserId)
 				if err != nil {
-
 					Log.LogError(err.Error())
-
 					return
 				}
 				cookie := &http.Cookie{
@@ -72,14 +62,11 @@ func (s *apiServer) SignInHandler(w http.ResponseWriter, r *http.Request) {
 				}
 				http.SetCookie(w, cookie)
 				loginLog := fmt.Sprintf("User with token: %s, just logged in...", token)
-
 				Log.LogInfo(loginLog)
 			}
 			err := json.NewEncoder(w).Encode(userModel)
 			if err != nil {
-
 				Log.LogError(err.Error())
-
 				w.WriteHeader(http.StatusBadRequest)
 			}
 			w.WriteHeader(http.StatusOK)
@@ -94,7 +81,6 @@ func (s *apiServer) SignInHandler(w http.ResponseWriter, r *http.Request) {
 func generateToken() string {
 	token := uuid.New().String()
 	tokenStr := fmt.Sprintf("Token created: %s", token)
-
 	Log.LogInfo(tokenStr)
 	return token
 }
@@ -106,9 +92,7 @@ func sessionNotExists(db *sql.DB, userID int) (bool, error) {
 	err := db.QueryRow(selectRecord, userID).Scan(&token)
 	if err == sql.ErrNoRows {
 		// Handle case where no token exists for provided userId
-
 		Log.LogInfo("Session doesn't exist")
-
 		return true, nil
 	} else if err != nil {
 		// Handle other errors

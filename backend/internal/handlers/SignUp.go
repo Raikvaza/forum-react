@@ -2,11 +2,12 @@ package handlers
 
 import (
 	"encoding/json"
+	"io"
+	"net/http"
+
 	"forum-backend/internal/Log"
 	"forum-backend/internal/database/execute"
 	"forum-backend/internal/models"
-	"io"
-	"net/http"
 )
 
 func (s *apiServer) SignupHandler(w http.ResponseWriter, r *http.Request) {
@@ -34,7 +35,6 @@ func (s *apiServer) SignupHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-
 	Log.LogInfo("Successfully created a user")
 	w.WriteHeader(http.StatusCreated)
 }

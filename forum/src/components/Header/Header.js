@@ -10,18 +10,9 @@ const handleMouseMovement = (e) => {
       e.target.style.setProperty('--x', `${ x }px`)
       e.target.style.setProperty('--y', `${ y }px`)
 }
-const [auth, setAuth] = useState(false);
-
-useEffect(() => {
-if(props.status){
-  if(props.status === true){
-    setAuth(true)
-  } 
-}   
-})
 
 const handleAuth = () => {
-  if (auth){
+  if (props.status){
     return(
       <>
       <Link to="/signin">
@@ -58,7 +49,7 @@ const handleAuth = () => {
           <button className="button" onMouseMove={handleMouseMovement}>Posts</button>
         </Link>
         
-        {auth && 
+        {props.status && 
         <>
           <Link to="/likedposts">
             <button className="button" onMouseMove={handleMouseMovement}>Liked Posts</button>
@@ -68,8 +59,6 @@ const handleAuth = () => {
           </Link>
         </>
         }
-        
-        
       </div>
       
       <div className="title" onMouseMove={handleMouseMovement}>

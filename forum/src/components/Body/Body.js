@@ -13,11 +13,19 @@ const Body = (props) => {
 //   }
 //   return (<p>asd</p>)
 // }
-
+console.log("Body:" + props.username);
+const [user, setUser] = useState();    
+const [isAuth, setIsAuth] = useState();
+useEffect(() => {
+  if (props.isAuth){
+    setIsAuth(props.isAuth)
+      setUser(props.username)
+    }   
+}, [props.isAuth, props.username]) 
 return (
     <div className="body-container">
       <div className="body-posts-container">
-      {props.createPost && <InputForm username= {props.username}/>}    
+      {props.createPost && <InputForm username= {user}/>}    
       {!props.createPost && props.posts && (props.posts.map(({PostId, Title, Content, CreationDate, Author})=>{return (<Post key={PostId} title={Title} content={Content} date={CreationDate} author={Author}/>)}))}
       </div>
     </div>

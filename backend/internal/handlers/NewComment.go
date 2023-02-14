@@ -2,12 +2,13 @@ package handlers
 
 import (
 	"encoding/json"
-	"forum-backend/internal/Log"
-	"forum-backend/internal/database/execute"
-	"forum-backend/internal/models"
 	"io"
 	"net/http"
 	"strconv"
+
+	"forum-backend/internal/Log"
+	"forum-backend/internal/database/execute"
+	"forum-backend/internal/models"
 )
 
 func (s *apiServer) NewComment(w http.ResponseWriter, r *http.Request) {
@@ -22,7 +23,6 @@ func (s *apiServer) NewComment(w http.ResponseWriter, r *http.Request) {
 		// 	log.Println("failed to get the runtime caller for the Logger")
 		// }
 		Log.LogError(err.Error())
-
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -33,12 +33,10 @@ func (s *apiServer) NewComment(w http.ResponseWriter, r *http.Request) {
 		// 	log.Println("failed to get the runtime caller for the Logger")
 		// }
 		Log.LogError(err.Error())
-
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	if booll := execute.CheckByToken(s.DB, tokenClient.Value); !booll {
-
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -50,7 +48,6 @@ func (s *apiServer) NewComment(w http.ResponseWriter, r *http.Request) {
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		Log.LogError(err.Error())
-
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -62,7 +59,6 @@ func (s *apiServer) NewComment(w http.ResponseWriter, r *http.Request) {
 	err = json.Unmarshal(body, &comment)
 	if err != nil {
 		Log.LogError(err.Error())
-
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}

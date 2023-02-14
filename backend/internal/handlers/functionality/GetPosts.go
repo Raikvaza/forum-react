@@ -12,7 +12,6 @@ import (
 func GetPosts(DB *sql.DB, w http.ResponseWriter) {
 	allPost, err := execute.GetAllpostSql(DB)
 	if err != nil {
-
 		Log.LogError(err.Error())
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("Bad Request"))
@@ -20,7 +19,6 @@ func GetPosts(DB *sql.DB, w http.ResponseWriter) {
 	}
 	err = json.NewEncoder(w).Encode(allPost)
 	if err != nil {
-
 		Log.LogError(err.Error())
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("Bad Request"))

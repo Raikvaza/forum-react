@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS posts(
 		title text,
 		content text,
 		creationDate TEXT
+		-- create foreign key by userID
 );
 CREATE TABLE IF NOT EXISTS posts_category(
     	postCategoryId INTEGER,

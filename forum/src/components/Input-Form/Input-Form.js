@@ -3,7 +3,6 @@ import './Input.css'
 import { TextField, MenuItem } from '@mui/material';
 async function handleSubmit(event, text,title, name) {
     event.preventDefault();
-  
     try {
       const response = await fetch('http://localhost:8080/api/createPost', {
         method: 'POST',
@@ -46,6 +45,18 @@ async function handleSubmit(event, text,title, name) {
 const InputForm = (props) => {
     const [text, setText] = useState('');
     const [title, setTitle] = useState('')
+    // const [user, setUser] = useState();    
+    // console.log(props.username);
+
+// const [isAuth, setIsAuth] = useState();
+    // useEffect(() => {
+    //   if (props.isAuth){
+    //     setIsAuth(props.isAuth)
+    //       setUser(props.username)
+    //       console.log(user);
+    //     }   
+    // }, [props.isAuth, props.username]) 
+    
     return (
       <form className='input-form' onSubmit={(e) => handleSubmit(e, text,title, props.username)}>
         <div className='input-group'>
