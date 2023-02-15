@@ -14,13 +14,20 @@ func (s *apiServer) CheckToken(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
+
 	tokenClient, err := r.Cookie("token")
-	//Log.LogInfo(tokenClient.Value)
 	if err != nil {
 		Log.LogError(err.Error())
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
+	if tokenClient.Value == "" {
+		Log.LogInfo("No valid token with name 'token'")
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	// Log.LogInfo(tokenClient.Value)
+
 	User, booll, err := execute.GetByToken(s.DB, tokenClient.Value)
 	if !booll {
 		w.WriteHeader(http.StatusUnauthorized)
@@ -28,6 +35,7 @@ func (s *apiServer) CheckToken(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		Log.LogError(err.Error())
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	err = json.NewEncoder(w).Encode(User)

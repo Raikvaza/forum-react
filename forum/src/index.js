@@ -5,7 +5,7 @@ import LoginPage from './routes/Login-Page/LoginPage';
 import SignUpPage from './routes/Sign-Up-Page/SignUpPage';
 import HomePage from './routes/Home-Page/HomePage';
 import CreatePost from './routes/Create-Post/CreatePost';
-
+import PostPage from './routes/Post-Page/PostPage';
 
 // function withAuth(Component) {
 //   return function WrappedComponent(props) {
@@ -58,7 +58,7 @@ function App () {
         console.log("FETCHING");
         fetch(`http://localhost:8080/api/checkUser`, {
           headers: {
-            'Accept': 'application/json ',
+            'Accept': 'application/json',
             'Credentials': 'include'
           },
           method: "GET",
@@ -84,16 +84,21 @@ function App () {
         }
 
 useEffect(()=>{
-  if (!fetchCalled){
+  // if (!fetchCalled){
     (async function() {
       await checkAuthentication();
     })();
-  }  
+    
 }, [])
     
 console.log("APPLICATION:"+isAuthenticated);
 console.log("APPLICATION:"+userData);
-  // const [isAuth, setAuth] = useState(false);
+
+if (!fetchCalled) {
+    return <div>Loading...</div>;
+}
+console.log("FINISHED FETCH");
+// const [isAuth, setAuth] = useState(false);
   // const [User, setUser] = useState('a')
   return (
     //<AuthContext.Provider value={{isAuth, setAuth, User, setUser}}>
@@ -102,6 +107,7 @@ console.log("APPLICATION:"+userData);
         <Route exact path="/" element={<HomePage isAuth={isAuthenticated} username={userData}/>} />
         <Route path="/signup" element={<SignUpPage/>} />
         <Route path="/signin" element={<LoginPage/>} />
+        <Route path="/post/:id" element={<PostPage />} />
         <Route path="/createpost" element={<CreatePost isAuth={isAuthenticated} username={userData}/>} />
       </Routes>
     </BrowserRouter>

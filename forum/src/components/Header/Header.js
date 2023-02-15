@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import './Header.css';
-
 const Header = (props) => {  
 const handleMouseMovement = (e) => {
     const x = e.pageX - e.target.offsetLeft
@@ -9,6 +8,25 @@ const handleMouseMovement = (e) => {
     
       e.target.style.setProperty('--x', `${ x }px`)
       e.target.style.setProperty('--y', `${ y }px`)
+}
+const handleSignOut = () =>{
+  const fetchData = async () => {
+  await fetch(`http://localhost:8080/api/signout`, {
+    headers: {
+      'Accept': 'application/json',
+      'Credentials': 'include'
+    },
+    method: "GET",
+    credentials: 'include',
+  }).then((r) => {
+    if (r.ok){
+      console.log("signed out successfully");
+    } else {
+      console.log("Problem with sign out");
+    }
+  })
+};
+fetchData();
 }
 
 const handleAuth = () => {
@@ -19,7 +37,7 @@ const handleAuth = () => {
           <button className="button" onMouseMove={handleMouseMovement}>Profile</button>
         </Link>
         <Link to="/signup">
-          <button className="button" onMouseMove={handleMouseMovement}>Log Out</button>
+          <button className="button" onMouseMove={handleMouseMovement} onClick={handleSignOut}>Log Out</button>
         </Link>
       </>
     )
@@ -37,8 +55,6 @@ const handleAuth = () => {
   }
   
 }
-
-
   return (
     <header className="header-container">
       <div className="nav">
@@ -70,8 +86,6 @@ const handleAuth = () => {
       </div>
         
     </header>
-
   );
 };
-
 export default Header;

@@ -33,7 +33,7 @@ const CreatePost = (props) => {
     console.log("CreatePOST:", props.username);
     return(
       <div>
-         <Header />
+        <Header status = {props.isAuth}/>
          <Body createPost={true} username={props.username} isAuth={props.isAuth}/>
          </div>
     )

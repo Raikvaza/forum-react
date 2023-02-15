@@ -27,9 +27,9 @@ func CorsHeaders(next http.Handler) http.Handler {
 		w.Header().Set("Access-Control-Allow-Credentials", "true")
 
 		if r.Method == http.MethodOptions {
-			w.WriteHeader(200)
 			return
 		}
+
 		next.ServeHTTP(w, r)
 	})
 }
@@ -40,6 +40,8 @@ func (s *apiServer) Start() error {
 	s.Router.Handle("/api/home", CorsHeaders(http.HandlerFunc(s.HomeHandler)))
 	s.Router.Handle("/api/signin", CorsHeaders(http.HandlerFunc(s.SignInHandler)))
 	s.Router.Handle("/api/signup", CorsHeaders((http.HandlerFunc(s.SignupHandler))))
+	s.Router.Handle("/api/signout", CorsHeaders((http.HandlerFunc(s.SignOutHandler))))
+
 	s.Router.Handle("/api/createPost", CorsHeaders(http.HandlerFunc(s.CreatePost)))
 	s.Router.Handle("/api/checkUser", CorsHeaders(http.HandlerFunc(s.CheckToken)))
 	// s.Router.Handle("/api/checkUserByToken", CorsHeaders(http.HandlerFunc(s.CheckUSerByToken)))

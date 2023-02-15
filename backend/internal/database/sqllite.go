@@ -2,8 +2,9 @@ package database
 
 import (
 	"database/sql"
-	"forum-backend/internal/Log"
 	"io/ioutil"
+
+	"forum-backend/internal/Log"
 
 	_ "github.com/mattn/go-sqlite3"
 )

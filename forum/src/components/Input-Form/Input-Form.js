@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Input.css'
 import { TextField, MenuItem } from '@mui/material';
+
+
 async function handleSubmit(event, text,title, name) {
     event.preventDefault();
     try {
@@ -17,8 +19,8 @@ async function handleSubmit(event, text,title, name) {
           Author: name,
         }),
       });
-      const data = await response.json();
-      console.log(data);
+      const data = await response;
+      
     } catch (error) {
       console.error(error);
     }

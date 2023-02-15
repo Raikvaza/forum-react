@@ -32,46 +32,52 @@ func (s *apiServer) SignInHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if userModel, booll := execute.CheckPasswordSql(usr, s.DB); booll {
-			sessionNotExists, sessionErr := sessionNotExists(s.DB, userModel.UserId)
+			sessionExists, sessionErr := UserSessionsExist(s.DB, userModel.UserId)
 			if sessionErr != nil {
 				Log.LogError(sessionErr.Error())
 				w.WriteHeader(http.StatusBadRequest)
 				return
 			}
-
-			if sessionNotExists {
-				Log.LogInfo("Creating a new session...")
-				tokenStat, err := s.DB.Prepare(`INSERT INTO user_sessions (token, expiresAt, userId) VALUES (?, ?, ?);`)
+			if sessionExists {
+				_, err := DeleteUserSessions(s.DB, userModel.UserId)
 				if err != nil {
 					Log.LogError(err.Error())
 					return
 				}
-				expiresAt := time.Now().Add(time.Hour * 24).Format("2006-01-02 15:04:05")
-				token := generateToken()
-				_, err = tokenStat.Exec(token, expiresAt, userModel.UserId)
-				if err != nil {
-					Log.LogError(err.Error())
-					return
-				}
-				cookie := &http.Cookie{
-					Name:     "token",
-					Value:    token,
-					Expires:  time.Now().Add(time.Hour),
-					HttpOnly: false,
-					Path:     "/",
-				}
-				http.SetCookie(w, cookie)
-				loginLog := fmt.Sprintf("User with token: %s, just logged in...", token)
-				Log.LogInfo(loginLog)
 			}
-			err := json.NewEncoder(w).Encode(userModel)
+			// 	if sessionNotExists {
+			// 		Log.LogInfo("Creating a new session...")
+			tokenStat, err := s.DB.Prepare(`INSERT INTO user_sessions (token, expiresAt, userId) VALUES (?, ?, ?);`)
+			if err != nil {
+				Log.LogError(err.Error())
+				return
+			}
+			expiresAt := time.Now().Add(time.Hour * 1).Format("2006-01-02 15:04:05")
+			token := generateToken()
+			_, err = tokenStat.Exec(token, expiresAt, userModel.UserId)
+			if err != nil {
+				Log.LogError(err.Error())
+				return
+			}
+			cookie := &http.Cookie{
+				Name:     "token",
+				Value:    token,
+				Expires:  time.Now().Add(time.Hour),
+				HttpOnly: false,
+				Path:     "/",
+			}
+			http.SetCookie(w, cookie)
+			loginLog := fmt.Sprintf("User with token: %s, just logged in...", token)
+			Log.LogInfo(loginLog)
+			err = json.NewEncoder(w).Encode(userModel)
 			if err != nil {
 				Log.LogError(err.Error())
 				w.WriteHeader(http.StatusBadRequest)
 			}
-			w.WriteHeader(http.StatusOK)
-			return
 		}
+		w.WriteHeader(http.StatusOK)
+		return
+
 	default:
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
@@ -85,18 +91,37 @@ func generateToken() string {
 	return token
 }
 
-func sessionNotExists(db *sql.DB, userID int) (bool, error) {
-	// check if the token already exists in the sessions table
-	selectRecord := "SELECT token FROM user_sessions WHERE userId = ?"
-	var token string
-	err := db.QueryRow(selectRecord, userID).Scan(&token)
-	if err == sql.ErrNoRows {
-		// Handle case where no token exists for provided userId
-		Log.LogInfo("Session doesn't exist")
-		return true, nil
-	} else if err != nil {
-		// Handle other errors
+//	func sessionNotExists(db *sql.DB, userID int) (bool, error) {
+//		// check if the token already exists in the sessions table
+//		selectRecord := "SELECT token FROM user_sessions WHERE userId = ?"
+//		var token string
+//		err := db.QueryRow(selectRecord, userID).Scan(&token)
+//		if err == sql.ErrNoRows {
+//			// Handle case where no token exists for provided userId
+//			Log.LogInfo("Session doesn't exist")
+//			return true, nil
+//		} else if err != nil {
+//			// Handle other errors
+//			return false, err
+//		}
+//		return false, nil
+//	}
+func UserSessionsExist(db *sql.DB, userID int) (bool, error) {
+	var exists bool
+	query := `SELECT EXISTS(SELECT 1 FROM user_sessions WHERE userId=$1)`
+	err := db.QueryRow(query, userID).Scan(&exists)
+	if err != nil {
+		Log.LogError(err.Error())
 		return false, err
 	}
-	return false, nil
+	return exists, nil
+}
+
+func DeleteUserSessions(db *sql.DB, userID int) (bool, error) {
+	query := `DELETE FROM user_sessions WHERE userId=$1`
+	_, err := db.Exec(query, userID)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }

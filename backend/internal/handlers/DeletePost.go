@@ -21,8 +21,14 @@ func (s *apiServer) DeletePost(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+	if tokenClient.Value == "" {
+		Log.LogError("User's token has no value of type token")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 	res, booll, err := execute.GetByToken(s.DB, tokenClient.Value)
 	if !booll || err != nil {
+		Log.LogInfo("No session matches user token")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
