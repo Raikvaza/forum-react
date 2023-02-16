@@ -2,11 +2,11 @@ import React from 'react';
 import Login from '../../components/Login/Login'
 import './LoginPage.css'
 
-function LoginPage() {
+function LoginPage(props) {
   
   return (
     <div className="App">
-      <Login />
+      <Login/>
     </div>
   );
 }

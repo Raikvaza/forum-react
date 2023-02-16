@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, createContext, useContext} from 'react';
 import { BrowserRouter, Route, Routes} from "react-router-dom";
 import ReactDOM from 'react-dom';
 import LoginPage from './routes/Login-Page/LoginPage';
@@ -49,7 +49,8 @@ import PostPage from './routes/Post-Page/PostPage';
 // Wrap the App component with the withAuth HOC
 //const AppWithAuth = withAuth(App);
 
-
+const AuthContext = createContext();
+export default AuthContext;
 function App () {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userData, setUserData] = useState()
@@ -78,7 +79,7 @@ function App () {
               throw new Error("Server error")
             }
           }).then(data => {
-            setUserData(data.Username)
+            if(data){setUserData(data.Username)}
             setFetchCalled(true)
           })
         }
@@ -102,16 +103,19 @@ console.log("FINISHED FETCH");
   // const [User, setUser] = useState('a')
   return (
     //<AuthContext.Provider value={{isAuth, setAuth, User, setUser}}>
+  <AuthContext.Provider value={{ isAuth: isAuthenticated, setIsAuth: setIsAuthenticated}}>  
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<HomePage isAuth={isAuthenticated} username={userData}/>} />
         <Route path="/signup" element={<SignUpPage/>} />
         <Route path="/signin" element={<LoginPage/>} />
+        {/* <Route path="/signin" element={<LoginPage isAuth={isAuthenticated}/>} /> */}
+
         <Route path="/post/:id" element={<PostPage />} />
         <Route path="/createpost" element={<CreatePost isAuth={isAuthenticated} username={userData}/>} />
       </Routes>
     </BrowserRouter>
-  //</AuthContext.Provider>
+  </AuthContext.Provider>
   )
 };
 // export default App;

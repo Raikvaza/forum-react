@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
 import './Login.css'
+import AuthContext from '../../index'
 const Login = () => {
-    
+    const {isAuth, setIsAuth} = useContext(AuthContext)
     useEffect(()=> {   
             const inputText = document.querySelectorAll('.auth-form__input');
-            
             inputText.forEach( function(input) {
                     input.addEventListener('focus', function() {
-                        this.classList.add('focus');                            this.parentElement.querySelector('.auth-form__placeholder').classList.add('focus');
+                        this.classList.add('focus');                            
+                        this.parentElement.querySelector('.auth-form__placeholder').classList.add('focus');
                     });
                     input.addEventListener('blur', function() {
                         this.classList.remove('focus');
@@ -43,8 +44,8 @@ const Login = () => {
                 });
             });
     },[]);
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [status, setStatus] = useState(null);
@@ -62,7 +63,8 @@ const Login = () => {
             return (  
                 <Alert severity="error">
                     User doesn't exist
-                </Alert>)
+                </Alert>
+            )
         }
     }
 
@@ -89,22 +91,19 @@ const Login = () => {
                 }),
             }).then((r) =>{
                 if (!r.ok){
-                    navigate("/")
+                    setStatus("Server-error")
+                    console.log("NOT SIGNED IN");
+                    return null
                 }
                 return (r.json())
             })
             .then((data) => {
-                const responseJSON = data;
-                const {Username} = responseJSON;
-                sessionStorage.setItem("Username", Username);
-                navigate("/", 
-                // {
-                //     state: {
-                //         username: username
-                //     }
-                // }
-                );
-            
+                if (data){
+                    setStatus("OK")
+                    setIsAuth(true)
+                    navigate("/");
+                }
+                
             })
         })();
     }

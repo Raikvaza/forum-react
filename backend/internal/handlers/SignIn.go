@@ -74,8 +74,10 @@ func (s *apiServer) SignInHandler(w http.ResponseWriter, r *http.Request) {
 				Log.LogError(err.Error())
 				w.WriteHeader(http.StatusBadRequest)
 			}
+			w.WriteHeader(http.StatusOK)
+			return
 		}
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusUnauthorized)
 		return
 
 	default:
