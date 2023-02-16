@@ -2,8 +2,7 @@ import React,{useEffect, useState} from "react";
 import InputForm from "../Input-Form/Input-Form";
 import './Body.css'
 import Post from "../Post/Post";
-const Body = (props) => {  
-console.log("HOME: "+props.posts);
+const Body = ({children}) => {  
 // props.posts ? console.log("exists"): console.log("no");
 // const handlePosts =()=>{
 //   if (props.posts){
@@ -22,23 +21,29 @@ console.log("HOME: "+props.posts);
 //       setUser(props.username)
 //     }   
 // }, [props.isAuth, props.username, props.posts]) 
-const handlePosts = () => {
-  if (props.createPost || !props.posts || props.posts.length === 0) {
-    return <></>;
-  }
 
-  return props.posts.map(({PostId, Title, Content, CreationDate, Author})=>{
-    return <Post key={PostId} postid={PostId} title={Title} content={Content} date={CreationDate} author={Author}/>
-  })
-}
+
+
+
+
+// const handlePosts = () => {
+//   if (props.createPost || !props.posts || props.posts.length === 0) {
+//     return <></>;
+//   }
+
+//   return props.posts.map(({PostId, Title, Content, CreationDate, Author})=>{
+//     return <Post key={PostId} postid={PostId} title={Title} content={Content} date={CreationDate} author={Author}/>
+//   })
+// }
 
 return (
     <div className="body-container">
       <div className="body-posts-container">
-      {props.createPost && <InputForm username= {props.username}/>}    
+      {children}
+      {/* {props.createPost && <InputForm username= {props.username}/>}     */}
       {/* DEBUG */}
       {/* {!props.createPost && (props.posts.length !== 1 && Object.keys(props.posts[0].length)!==0 ) && (props.posts.map(({PostId, Title, Content, CreationDate, Author})=>{return (<Post key={PostId} title={Title} content={Content} date={CreationDate} author={Author}/>)}))} */}
-      {handlePosts()}
+      {/* {handlePosts()} */}
       </div>
     </div>
   )

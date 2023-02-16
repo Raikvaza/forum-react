@@ -118,3 +118,98 @@
 2023/02/16 15:45:19 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/SignIn.go, line: 71): User with token: c1b91354-b9e9-4478-bff1-6a2c0ea0b865, just logged in...
 2023/02/16 15:45:19 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).SignInHandler (SignIn.go:77)
 2023/02/16 15:45:30 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:47)
+2023/02/16 16:02:25 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 16:02:25 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 16:02:25 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 16:02:25 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 16:02:38 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:47)
+2023/02/16 16:02:50 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:47)
+2023/02/16 16:05:28 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:47)
+2023/02/16 16:15:00 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:47)
+2023/02/16 16:18:20 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:47)
+2023/02/16 16:21:39 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:47)
+2023/02/16 16:24:05 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/CreatePost.go, line: 92): New Post Created by: c1b91354-b9e9-4478-bff1-6a2c0ea0b865
+2023/02/16 16:50:10 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 16:50:10 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 16:50:10 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 16:50:10 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 16:50:24 [ERROR] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/CheckToken.go, line: 20): http: named cookie not present
+2023/02/16 16:51:02 [ERROR] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/CheckToken.go, line: 20): http: named cookie not present
+2023/02/16 16:51:03 [ERROR] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/CheckToken.go, line: 20): http: named cookie not present
+2023/02/16 16:51:19 [ERROR] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/CheckToken.go, line: 20): http: named cookie not present
+2023/02/16 16:51:35 [ERROR] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/CheckToken.go, line: 20): http: named cookie not present
+2023/02/16 16:54:10 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 16:54:10 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 16:54:10 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 16:54:10 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 16:54:11 [ERROR] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/CheckToken.go, line: 20): http: named cookie not present
+2023/02/16 16:59:47 [ERROR] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/CheckToken.go, line: 20): http: named cookie not present
+2023/02/16 17:04:08 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 17:04:08 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 17:04:08 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 17:04:08 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 17:04:11 [ERROR] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/CheckToken.go, line: 22): http: named cookie not present
+2023/02/16 17:07:12 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 17:07:12 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 17:07:12 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 17:07:12 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 17:07:14 [ERROR] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/CheckToken.go, line: 22): http: named cookie not present
+2023/02/16 17:07:15 [ERROR] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/CheckToken.go, line: 22): http: named cookie not present
+2023/02/16 17:07:28 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/SignIn.go, line: 93): Token created: 984a4dae-e388-48a0-97d4-c8d90bc6f57e
+2023/02/16 17:07:28 net/http: invalid Cookie.Domain "http://localhost:8080"; dropping domain attribute
+2023/02/16 17:07:28 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/SignIn.go, line: 72): User with token: 984a4dae-e388-48a0-97d4-c8d90bc6f57e, just logged in...
+2023/02/16 17:07:28 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).SignInHandler (SignIn.go:78)
+2023/02/16 17:10:31 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 17:10:31 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 17:10:31 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 17:10:31 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 17:11:40 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 17:11:40 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 17:11:40 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 17:11:40 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 17:18:39 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 17:18:39 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 17:18:39 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 17:18:39 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 17:18:56 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 17:18:56 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 17:18:56 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 17:18:56 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 17:18:57 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:53)
+2023/02/16 17:23:29 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 17:23:29 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 17:23:29 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 17:23:29 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 17:23:32 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:53)
+2023/02/16 17:23:52 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 17:23:52 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 17:23:52 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 17:23:52 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 17:24:09 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 17:24:09 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 17:24:09 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 17:24:09 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 17:24:10 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:53)
+2023/02/16 17:24:46 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 17:24:46 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 17:24:46 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 17:24:46 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 17:24:48 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:53)
+2023/02/16 17:25:48 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 26): Successfully Initiated the Data Base
+2023/02/16 17:25:48 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 31): Tables have been created
+2023/02/16 17:25:48 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/app/app.go, line: 35): NewApiServer has been created
+2023/02/16 17:25:48 [INFO] (file: /home/student/Documents/Code/alem/forum-react/backend/internal/handlers/Server.go, line: 38): Starting the server at port localhost:8080
+2023/02/16 17:26:26 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)
+2023/02/16 17:26:42 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)
+2023/02/16 17:26:43 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)
+2023/02/16 17:26:44 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)
+2023/02/16 17:26:44 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)
+2023/02/16 17:26:46 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)
+2023/02/16 17:26:47 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)
+2023/02/16 17:26:47 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)
+2023/02/16 17:27:24 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)
+2023/02/16 17:29:26 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)
+2023/02/16 17:29:38 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)
+2023/02/16 17:29:39 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)
+2023/02/16 17:29:42 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)
+2023/02/16 17:35:03 http: superfluous response.WriteHeader call from forum-backend/internal/handlers.(*apiServer).CheckToken (CheckToken.go:46)

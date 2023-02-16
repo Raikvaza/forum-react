@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import './Header.css';
+import AuthContext from "../..";
+import { useContext } from "react";
+
 const Header = (props) => {  
-const handleMouseMovement = (e) => {
+const {isAuth} = useContext(AuthContext)
+
+  const handleMouseMovement = (e) => {
     const x = e.pageX - e.target.offsetLeft
       const y = e.pageY - e.target.offsetTop
     
@@ -30,7 +35,7 @@ fetchData();
 }
 
 const handleAuth = () => {
-  if (props.status){
+  if (isAuth){
     return(
       <>
       <Link to="/signin">
@@ -65,7 +70,7 @@ const handleAuth = () => {
           <button className="button" onMouseMove={handleMouseMovement}>Posts</button>
         </Link>
         
-        {props.status && 
+        {isAuth && 
         <>
           <Link to="/likedposts">
             <button className="button" onMouseMove={handleMouseMovement}>Liked Posts</button>

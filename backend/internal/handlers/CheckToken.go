@@ -27,7 +27,6 @@ func (s *apiServer) CheckToken(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// Log.LogInfo(tokenClient.Value)
-
 	User, booll, err := execute.GetByToken(s.DB, tokenClient.Value)
 	if !booll {
 		w.WriteHeader(http.StatusUnauthorized)

@@ -2,10 +2,13 @@ import React, {useEffect, useState} from 'react';
 import Header from '../../components/Header/Header';
 import Body from '../../components/Body/Body';
 import './HomePage.css'
-// import { json } from 'react-router-dom';
+import AuthContext from '../../index'
+import Layout from '../../components/Layout/Layout';
+import Post from '../../components/Post/Post';
 const HomePage = (props) => {
 const [posts, setPosts] = useState([]);
-// const [fetchCalled, setFetchCalled] = useState(false);
+//const {isAuth} = useContext(AuthContext)
+
 console.log(props);
 
 useEffect(() => {
@@ -35,16 +38,27 @@ useEffect(() => {
 }, []);
 
     console.log("POSTS:"+posts);
-    // if (!fetchCalled){
-    //   return <div>LOADING</div>
-    // }
+    
+    const handlePosts = () => {
+      if (!posts || posts.length === 0) {
+        return <></>;
+      }
+    
+      return posts.map(({PostId, Title, Content, CreationDate, Author})=>{
+        return <Post key={PostId} postid={PostId} title={Title} content={Content} date={CreationDate} author={Author}/>
+      })
+    }
     return (
-        <div>
-        <Header status = {props.isAuth}/>
-        <Body createPost = {false} posts={posts} isAuth={props.isAuth}/>
-        <div>
-        </div>
-        </div>
+        
+        <Layout>
+          {handlePosts()}
+        </Layout>
+        // <div>
+        // <Header status = {isAuth}/>
+        // <Body createPost = {false} posts={posts} isAuth={isAuth}/>
+        // <div>
+        // </div>
+        // </div>
     );
 };
 

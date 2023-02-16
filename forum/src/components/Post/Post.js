@@ -5,7 +5,7 @@ import './Post.css'
 
   function Post(props) {
     // const [text, setText] = useState('');
-    console.log(props);
+    
     return (
       <div className='post-container'>
         <div className='post-header'>

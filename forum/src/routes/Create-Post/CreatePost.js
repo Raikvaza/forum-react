@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import Header from '../../components/Header/Header';
 import Body from '../../components/Body/Body';
-
-
+import Layout from '../../components/Layout/Layout';
+import InputForm from '../../components/Input-Form/Input-Form';
 const CreatePost = (props) => {
 
 // const [user, setUser] = useState();    
@@ -32,10 +32,9 @@ const CreatePost = (props) => {
     //   );
     console.log("CreatePOST:", props.username);
     return(
-      <div>
-        <Header status = {props.isAuth}/>
-         <Body createPost={true} username={props.username} isAuth={props.isAuth}/>
-         </div>
+      <Layout>
+        <InputForm/>
+      </Layout>
     )
     
 };

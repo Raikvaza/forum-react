@@ -62,8 +62,9 @@ func (s *apiServer) SignInHandler(w http.ResponseWriter, r *http.Request) {
 			cookie := &http.Cookie{
 				Name:     "token",
 				Value:    token,
+				Domain:   "http://localhost:8080",
 				Expires:  time.Now().Add(time.Hour),
-				HttpOnly: false,
+				HttpOnly: true,
 				Path:     "/",
 			}
 			http.SetCookie(w, cookie)

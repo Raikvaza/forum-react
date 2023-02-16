@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Input.css'
 import { TextField, MenuItem } from '@mui/material';
-
+import AuthContext from '../../index'
 
 async function handleSubmit(event, text,title, name) {
     event.preventDefault();
@@ -20,7 +20,6 @@ async function handleSubmit(event, text,title, name) {
         }),
       });
       const data = await response;
-      
     } catch (error) {
       console.error(error);
     }
@@ -44,7 +43,8 @@ async function handleSubmit(event, text,title, name) {
       label: '¥',
     },
   ];
-const InputForm = (props) => {
+const InputForm = () => {
+    const {username} = useContext(AuthContext)
     const [text, setText] = useState('');
     const [title, setTitle] = useState('')
     // const [user, setUser] = useState();    
@@ -60,7 +60,7 @@ const InputForm = (props) => {
     // }, [props.isAuth, props.username]) 
     
     return (
-      <form className='input-form' onSubmit={(e) => handleSubmit(e, text,title, props.username)}>
+      <form className='input-form' onSubmit={(e) => handleSubmit(e, text,title, username)}>
         <div className='input-group'>
           <h1>Create Post</h1>  
         </div>
